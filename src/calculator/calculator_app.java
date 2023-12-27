@@ -803,6 +803,9 @@ public class calculator_app extends javax.swing.JFrame{
         else if(c == '('){
             jButton20ActionPerformed(e);
         }
+        else if(c == '.'){
+            jButton2ActionPerformed(e);
+        }
         else if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             c = '=';
             operation_entry(c);
