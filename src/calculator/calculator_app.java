@@ -4,6 +4,7 @@
  */
 package calculator;
 
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -11,7 +12,7 @@ import java.util.Stack;
  *
  * @author moham
  */
-public class calculator_app extends javax.swing.JFrame {
+public class calculator_app extends javax.swing.JFrame{
     
     private double num = 0;
     private String txt = "";
@@ -112,6 +113,11 @@ public class calculator_app extends javax.swing.JFrame {
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
             }
         });
 
@@ -405,6 +411,11 @@ public class calculator_app extends javax.swing.JFrame {
                 jTextField2ActionPerformed(evt);
             }
         });
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField2KeyPressed(evt);
+            }
+        });
 
         jButton36.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton36.setText("sin");
@@ -624,6 +635,9 @@ public class calculator_app extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -749,6 +763,33 @@ public class calculator_app extends javax.swing.JFrame {
             x--;
         }
         return ans;
+    }
+    
+    private void keyboardInterface(java.awt.event.KeyEvent evt){
+        char c = evt.getKeyChar();
+        //System.out.println(e.getKeyChar() + "released");
+        java.awt.event.ActionEvent e = new java.awt.event.ActionEvent(this, java.awt.event.ActionEvent.ACTION_PERFORMED, "SimulateButtonClick");
+        if(c >= '0' && c <= '9'){
+            number_entry(Long.parseLong(String.valueOf(c)));
+        }
+        else if(opr.containsKey(c)){
+            operation_entry(c);
+        }
+        else if(c == '/' || c == '*'){
+            c = (c=='/') ? '÷' : c;
+            c = (c=='*') ? 'x' : c;
+            operation_entry(c);
+        }
+        else if(c == '('){
+            jButton20ActionPerformed(e);
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            c = '=';
+            operation_entry(c);
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
+            jButton30ActionPerformed(e);
+        }
     }
     
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1341,6 +1382,15 @@ public class calculator_app extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_jButton41ActionPerformed
 
+    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+        // TODO add your handling code here:
+        keyboardInterface(evt);
+    }//GEN-LAST:event_jTextField2KeyPressed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        // TODO add your handling code here:
+        keyboardInterface(evt);
+    }//GEN-LAST:event_jTextField1KeyPressed
     /**
      * @param args the command line arguments
      */
