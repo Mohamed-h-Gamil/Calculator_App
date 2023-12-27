@@ -790,7 +790,14 @@ public class calculator_app extends javax.swing.JFrame{
         //System.out.println(e.getKeyChar() + "released");
         java.awt.event.ActionEvent e = new java.awt.event.ActionEvent(this, java.awt.event.ActionEvent.ACTION_PERFORMED, "SimulateButtonClick");
         if(c >= '0' && c <= '9'){
-            number_entry(Long.parseLong(String.valueOf(c)));
+            if(c != '0')
+            {
+                number_entry(Long.parseLong(String.valueOf(c)));
+            }
+            else
+            {
+                jButton3ActionPerformed(e);
+            }
         }
         else if(opr.containsKey(c)){
             operation_entry(c);
@@ -955,7 +962,7 @@ public class calculator_app extends javax.swing.JFrame{
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         // TODO add your handling code here:
         bracket_flag++;
-        if(opr_flag){
+        if(opr_flag || empty_flag){
             operations.push(new Stack<Character>());
             operands.push(new Stack<Double>());
             num = 0;
