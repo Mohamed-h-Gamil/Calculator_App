@@ -143,7 +143,7 @@ All other Functions (**reciprocal**, **sqr**, **sqrt**, **10^**, **abs**, **log*
 
 ### Open Bracket Button Function
 
-The `jButton20ActionPerformed` function in `calculator_app.java` file is an event handler that gets called when the open bracket button "(" is clicked in your calculator application. Here's a breakdown of what each part of the function does:
+The `jButton20ActionPerformed` function in `calculator_app.java` file is an event handler that gets called when the open bracket button "(" is clicked in the calculator application. Here's a breakdown of what each part of the function does:
 
 - `bracket_flag++;`: This line increments the `bracket_flag`, indicating that an open bracket has been entered.
 
@@ -155,7 +155,7 @@ This function allows the calculator to handle the entry of open brackets. It cor
 
 ### Closed Bracket Button Function
 
-The `jButton19ActionPerformed` function in `calculator_app.java` file is an event handler that gets called when the closed bracket button ")" is clicked in your calculator application. Here's a breakdown of what each part of the function does:
+The `jButton19ActionPerformed` function in `calculator_app.java` file is an event handler that gets called when the closed bracket button ")" is clicked in the calculator application. Here's a breakdown of what each part of the function does:
 
 - `if(bracket_flag > 0)`: This checks if there is an open bracket that has not been closed yet. The `bracket_flag` is incremented each time an open bracket is entered and decremented each time a closed bracket is entered.
 
@@ -170,6 +170,18 @@ The `jButton19ActionPerformed` function in `calculator_app.java` file is an even
 - `bracket_flag--;`: This line decrements the `bracket_flag`, indicating that a bracket has been closed.
 
 This function allows the calculator to handle the entry of closed brackets. It correctly updates the current number, the draft of the current expression, and the text fields to reflect the current state of the calculator. It also correctly handles the precedence of operations and the use of parentheses.
+
+### Keyboard Interfacing Function
+
+The `keyboardInterface(java.awt.event.KeyEvent evt)` function in `calculator_app.java` file is an event handler that gets called when a key is pressed on the keyboard. Here's a breakdown of what each part of the function does:
+
+- `char c = evt.getKeyChar();`: This line gets the character of the key that was pressed.
+
+- `java.awt.event.ActionEvent e = new java.awt.event.ActionEvent(this, java.awt.event.ActionEvent.ACTION_PERFORMED, "SimulateButtonClick");`: This line creates a new `ActionEvent` that simulates a button click.
+
+- The `if` and `else if` statements check what key was pressed and call the appropriate function to handle that key press. For example, if a number key was pressed, it calls the `number_entry` function with the number as an argument. If an operator key was pressed, it calls the `operation_entry` function with the operator as an argument. If the enter key was pressed, it simulates a click of the equals button. If the backspace key was pressed, it simulates a click of the backspace button.
+
+This function allows the calculator to be controlled using the keyboard. It correctly handles the entry of numbers, operators, and special characters, and updates the calculator's state accordingly.
 
 ## Getting Started
 
