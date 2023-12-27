@@ -4,6 +4,7 @@
  */
 package calculator;
 
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -11,7 +12,7 @@ import java.util.Stack;
  *
  * @author moham
  */
-public class calculator_app extends javax.swing.JFrame {
+public class calculator_app extends javax.swing.JFrame{
     
     private double num = 0;
     private String txt = "";
@@ -105,13 +106,33 @@ public class calculator_app extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Calculator");
         setBackground(new java.awt.Color(243, 243, 243));
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                formFocusLost(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField1.setText("0");
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
             }
         });
 
@@ -400,9 +421,19 @@ public class calculator_app extends javax.swing.JFrame {
         jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(153, 153, 153));
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField2FocusLost(evt);
+            }
+        });
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
+            }
+        });
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField2KeyPressed(evt);
             }
         });
 
@@ -624,6 +655,9 @@ public class calculator_app extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -749,6 +783,36 @@ public class calculator_app extends javax.swing.JFrame {
             x--;
         }
         return ans;
+    }
+    
+    private void keyboardInterface(java.awt.event.KeyEvent evt){
+        char c = evt.getKeyChar();
+        //System.out.println(e.getKeyChar() + "released");
+        java.awt.event.ActionEvent e = new java.awt.event.ActionEvent(this, java.awt.event.ActionEvent.ACTION_PERFORMED, "SimulateButtonClick");
+        if(c >= '0' && c <= '9'){
+            number_entry(Long.parseLong(String.valueOf(c)));
+        }
+        else if(opr.containsKey(c)){
+            operation_entry(c);
+        }
+        else if(c == '/' || c == '*'){
+            c = (c=='/') ? '÷' : c;
+            c = (c=='*') ? 'x' : c;
+            operation_entry(c);
+        }
+        else if(c == '('){
+            jButton20ActionPerformed(e);
+        }
+        else if(c == '.'){
+            jButton2ActionPerformed(e);
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            c = '=';
+            operation_entry(c);
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
+            jButton30ActionPerformed(e);
+        }
     }
     
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1341,6 +1405,35 @@ public class calculator_app extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_jButton41ActionPerformed
 
+    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+        // TODO add your handling code here:
+        keyboardInterface(evt);
+    }//GEN-LAST:event_jTextField2KeyPressed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        // TODO add your handling code here:
+        keyboardInterface(evt);
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+        keyboardInterface(evt);
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
+        // TODO add your handling code here:
+        this.requestFocus();
+    }//GEN-LAST:event_jTextField2FocusLost
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        // TODO add your handling code here:
+        this.requestFocus();
+    }//GEN-LAST:event_jTextField1FocusLost
+
+    private void formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusLost
+        // TODO add your handling code here:
+        this.requestFocus();
+    }//GEN-LAST:event_formFocusLost
     /**
      * @param args the command line arguments
      */
