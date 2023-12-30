@@ -21,6 +21,7 @@ public class calculator_app extends javax.swing.JFrame{
     private HashMap<Character,Integer> opr = new HashMap<Character,Integer>();
     private Stack<Stack<Character>> operations = new Stack<Stack<Character>>();
     private Stack<Stack<Double>> operands = new Stack<Stack<Double>>();
+    private Stack<Integer> brackets_location = new Stack<Integer>();
     
     private boolean empty_flag = true;
     private boolean opr_flag = false;
@@ -662,10 +663,11 @@ public class calculator_app extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void number_entry(long n){
-        if(empty_flag || opr_flag || func_flag){
+        if(empty_flag || opr_flag || func_flag || end_bracket){
             num = 0;
             txt = "";
             decimal_flag = -1;
+            if(end_bracket)operation_entry('x');
             if(end_flag){
                 draft = "";
                 operands.peek().clear();
@@ -687,6 +689,7 @@ public class calculator_app extends javax.swing.JFrame{
     }
     
     private void operation_entry(char o){
+        if(end_bracket) brackets_location.pop();
         if(o == '=' && bracket_flag > 0){
             java.awt.event.ActionEvent evt = new java.awt.event.ActionEvent(this, java.awt.event.ActionEvent.ACTION_PERFORMED, "SimulateButtonClick");
             while(bracket_flag > 0){
@@ -798,6 +801,9 @@ public class calculator_app extends javax.swing.JFrame{
             {
                 jButton3ActionPerformed(e);
             }
+        }
+        else if(c == ')'){
+            jButton19ActionPerformed(e);
         }
         else if(opr.containsKey(c)){
             operation_entry(c);
@@ -929,12 +935,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "fact("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "fact" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "fact" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -997,6 +1000,7 @@ public class calculator_app extends javax.swing.JFrame{
             end_flag = false;
             func_flag = false;
         }
+        brackets_location.push(jTextField2.getText().length()-1);
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
@@ -1010,12 +1014,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "abs("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "abs" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "abs" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1034,12 +1035,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "1/("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "1/" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "1/" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1063,6 +1061,7 @@ public class calculator_app extends javax.swing.JFrame{
         operations.clear();
         operands.push(new Stack<Double>());
         operations.push(new Stack<Character>());
+        brackets_location.clear();
         decimal_flag = -1;
         func_count = 0;
         empty_flag = true;
@@ -1136,12 +1135,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "log("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "log" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "log" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1166,12 +1162,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "ln("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "ln" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "ln" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1190,12 +1183,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "10^("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "10^" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "10^" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1214,12 +1204,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "sqrt("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "sqrt" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "sqrt" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1238,12 +1225,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "sqr("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "sqr" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "sqr" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1267,12 +1251,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "asin("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "asin" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "asin" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1291,12 +1272,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "cos("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "cos" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "cos" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1315,12 +1293,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "sin("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "sin" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "sin" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1346,12 +1321,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "tan("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "tan" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "tan" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1370,12 +1342,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "acos("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "acos" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "acos" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
@@ -1394,12 +1363,9 @@ public class calculator_app extends javax.swing.JFrame{
         txt = "atan("+txt+")";
         jTextField1.setText(String.valueOf(num));
         if(end_bracket){
-            int begin = -1;
-            for(int i = 0; i <= bracket_flag+func_count; i++){
-                begin = draft.indexOf('(', begin+1);
-            }
-            txt = "atan" + draft.substring(begin);
-            draft = draft.substring(0, begin);
+            int bracket = brackets_location.pop();
+            txt = "atan" + draft.substring(bracket);
+            draft = draft.substring(0, bracket);
         }
         func_count++;
         func_flag = true;
