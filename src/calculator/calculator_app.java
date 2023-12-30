@@ -802,6 +802,9 @@ public class calculator_app extends javax.swing.JFrame{
                 jButton3ActionPerformed(e);
             }
         }
+        else if(c == ')'){
+            jButton19ActionPerformed(e);
+        }
         else if(opr.containsKey(c)){
             operation_entry(c);
         }
