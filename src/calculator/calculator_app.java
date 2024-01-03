@@ -689,7 +689,9 @@ public class calculator_app extends javax.swing.JFrame{
     }
     
     private void operation_entry(char o){
-        if(end_bracket) brackets_location.pop();
+        if(end_bracket){
+            brackets_location.pop();
+        }
         if(o == '=' && bracket_flag > 0){
             java.awt.event.ActionEvent evt = new java.awt.event.ActionEvent(this, java.awt.event.ActionEvent.ACTION_PERFORMED, "SimulateButtonClick");
             while(bracket_flag > 0){
@@ -776,6 +778,7 @@ public class calculator_app extends javax.swing.JFrame{
                     operations.peek().clear();
                 }
         }
+        if(o != ')') end_bracket = false;
     }
     
     private double factorial(double x){
